@@ -10,33 +10,28 @@ import SwiftUI
 
 struct RepositoryListView : View {
 
+    @EnvironmentObject private var repositoryData: RepositoryData
     @State private var text: String = ""
 
     var body: some View {
 
         NavigationView {
 
-            TextField($text, placeholder: Text("Search reposipories..."), onCommit: { print(self.text) })
+            TextField($text,
+                      placeholder: Text("Search reposipories..."),
+                      onCommit: { self.repositoryData.search(query: self.text) })
                 .frame(height: 40)
                 .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
                 .border(Color.gray, cornerRadius: 8)
                 .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
 
             List {
-                 RepositoryView(repository: Repository(name: "Repository Name",
-                                                      description: "Hoge",
-                                                      stargazers: .init(totalCount: 100),
-                                                      url: URL(string: "https://github.com")!))
+
+                ForEach(repositoryData.repositories.identified(by: \.id)) { repository in
+                     RepositoryView(repository: repository)
+                }
             }
             .navigationBarTitle(Text("Search🔍"))
         }
     }
 }
-
-#if DEBUG
-struct RepositoryListView_Previews : PreviewProvider {
-    static var previews: some View {
-        RepositoryListView()
-    }
-}
-#endif

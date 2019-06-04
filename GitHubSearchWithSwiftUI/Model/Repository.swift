@@ -9,15 +9,9 @@
 import Foundation
 
 struct Repository: Decodable {
-    let name: String
+    let id: Int
+    let fullName: String
     let description: String?
-    let stargazers: Count
-    let url: URL
-}
-
-extension Repository {
-
-    struct Count: Decodable {
-        let totalCount: Int
-    }
+    let stargazersCount: Int
+    let htmlUrl: URL
 }

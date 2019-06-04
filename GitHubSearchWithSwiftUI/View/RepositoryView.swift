@@ -18,7 +18,7 @@ struct RepositoryView : View {
 
             HStack {
                 Image(systemName: "doc.text")
-                Text(repository.name)
+                Text(repository.fullName)
                     .bold()
             }
 
@@ -27,19 +27,8 @@ struct RepositoryView : View {
 
             HStack {
                 Image(systemName: "star")
-                Text("\(repository.stargazers.totalCount)")
+                Text("\(repository.stargazersCount)")
             }
         }
     }
 }
-
-#if DEBUG
-struct RepositoryView_Previews : PreviewProvider {
-    static var previews: some View {
-        RepositoryView(repository: Repository(name: "Repository Name",
-                                              description: "Hoge",
-                                              stargazers: .init(totalCount: 100),
-                                              url: URL(string: "https://github.com")!))
-    }
-}
-#endif
