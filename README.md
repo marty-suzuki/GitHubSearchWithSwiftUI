@@ -2,7 +2,7 @@
 
 GitHubSearchWithSwiftUI is an example that using [SwiftUI <img width="18px" src="https://developer.apple.com/assets/elements/icons/swiftui/swiftui-96x96.png"/>](https://developer.apple.com/xcode/swiftui/)
 
-<img width="400px" src="https://user-images.githubusercontent.com/2082134/58904819-4283c000-8743-11e9-9ffa-a89af4abf845.png" />
+<img width="400px" src="https://user-images.githubusercontent.com/2082134/58905672-41539280-8745-11e9-99e3-cb3c3c4991f0.png" />
 
 ## TODO
 

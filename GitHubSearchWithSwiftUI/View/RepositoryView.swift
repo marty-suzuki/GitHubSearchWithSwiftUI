@@ -23,7 +23,9 @@ struct RepositoryView : View {
             }
 
             // Show text if description exists
-            repository.description.map(Text.init)
+            repository.description
+                .map(Text.init)?
+                .lineLimit(nil)
 
             HStack {
                 Image(systemName: "star")
