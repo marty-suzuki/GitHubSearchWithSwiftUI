@@ -8,8 +8,8 @@ GitHubSearchWithSwiftUI is an example that using [SwiftUI <img width="18px" src=
 
 - [x] Search with TextField's text
 - [x] Reflect API responses to List
-- [ ] Separate API access from BindableObject
-- [ ] Use Combine with API access
+- [X] Separate API access from BindableObject
+- [X] Use Combine with API access
 - [ ] Reflect responses in MainThread via Combine
 
 ## Requirements
