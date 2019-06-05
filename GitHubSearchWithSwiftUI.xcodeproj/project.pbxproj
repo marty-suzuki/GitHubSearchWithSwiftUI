@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		ED73146022A6E978004F8DA0 /* RepositoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED73145F22A6E978004F8DA0 /* RepositoryData.swift */; };
 		ED73146222A6F228004F8DA0 /* RepositoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED73146122A6F228004F8DA0 /* RepositoryListView.swift */; };
+		EDDADAB122A808D500FEDC01 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDADAB022A808D500FEDC01 /* Combine.swift */; };
+		EDDADAB322A809E600FEDC01 /* URLSession.Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDADAB222A809E600FEDC01 /* URLSession.Combine.swift */; };
+		EDDADAB522A821CD00FEDC01 /* ItemResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDADAB422A821CD00FEDC01 /* ItemResponse.swift */; };
 		EDDF06A222A6C61C00B23D44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDF06A122A6C61C00B23D44 /* AppDelegate.swift */; };
 		EDDF06A422A6C61C00B23D44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDF06A322A6C61C00B23D44 /* SceneDelegate.swift */; };
 		EDDF06A822A6C61D00B23D44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDDF06A722A6C61D00B23D44 /* Assets.xcassets */; };
@@ -21,6 +24,9 @@
 /* Begin PBXFileReference section */
 		ED73145F22A6E978004F8DA0 /* RepositoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryData.swift; sourceTree = "<group>"; };
 		ED73146122A6F228004F8DA0 /* RepositoryListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryListView.swift; sourceTree = "<group>"; };
+		EDDADAB022A808D500FEDC01 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
+		EDDADAB222A809E600FEDC01 /* URLSession.Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.Combine.swift; sourceTree = "<group>"; };
+		EDDADAB422A821CD00FEDC01 /* ItemResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemResponse.swift; sourceTree = "<group>"; };
 		EDDF069E22A6C61C00B23D44 /* GitHubSearchWithSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubSearchWithSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDF06A122A6C61C00B23D44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDDF06A322A6C61C00B23D44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +49,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EDDADAAF22A808C300FEDC01 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				EDDADAB022A808D500FEDC01 /* Combine.swift */,
+				EDDADAB222A809E600FEDC01 /* URLSession.Combine.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		EDDF069522A6C61C00B23D44 = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +79,7 @@
 			children = (
 				EDDF06A122A6C61C00B23D44 /* AppDelegate.swift */,
 				EDDF06A322A6C61C00B23D44 /* SceneDelegate.swift */,
+				EDDADAAF22A808C300FEDC01 /* Extension */,
 				EDDF06B822A6D77000B23D44 /* Model */,
 				EDDF06B522A6CD6400B23D44 /* View */,
 				EDDF06A722A6C61D00B23D44 /* Assets.xcassets */,
@@ -96,6 +112,7 @@
 			children = (
 				EDDF06B922A6D78200B23D44 /* Repository.swift */,
 				ED73145F22A6E978004F8DA0 /* RepositoryData.swift */,
+				EDDADAB422A821CD00FEDC01 /* ItemResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -173,10 +190,13 @@
 			files = (
 				ED73146222A6F228004F8DA0 /* RepositoryListView.swift in Sources */,
 				EDDF06A222A6C61C00B23D44 /* AppDelegate.swift in Sources */,
+				EDDADAB522A821CD00FEDC01 /* ItemResponse.swift in Sources */,
 				EDDF06A422A6C61C00B23D44 /* SceneDelegate.swift in Sources */,
 				EDDF06BA22A6D78200B23D44 /* Repository.swift in Sources */,
 				EDDF06B722A6CD8300B23D44 /* RepositoryView.swift in Sources */,
+				EDDADAB322A809E600FEDC01 /* URLSession.Combine.swift in Sources */,
 				ED73146022A6E978004F8DA0 /* RepositoryData.swift in Sources */,
+				EDDADAB122A808D500FEDC01 /* Combine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

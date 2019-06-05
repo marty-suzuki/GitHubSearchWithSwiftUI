@@ -10,10 +10,15 @@ import Combine
 import Foundation
 import SwiftUI
 
+extension JSONDecoder: TopLevelDecoder {}
+
 final class RepositoryData: BindableObject {
 
     let didChange: AnyPublisher<RepositoryData, Never>
     private let _didChange = PassthroughSubject<RepositoryData, Never>()
+
+    private let _searchWithQuery = PassthroughSubject<String, Never>()
+    private lazy var repositoriesAssign = Subscribers.Assign(object: self, keyPath: \.repositories)
 
     private(set) var repositories: [Repository] = [] {
         didSet {
@@ -24,42 +29,41 @@ final class RepositoryData: BindableObject {
         }
     }
 
+    deinit {
+        repositoriesAssign.cancel()
+    }
+
     init() {
-        self.didChange = AnyPublisher(_didChange)
+        self.didChange = _didChange.eraseToAnyPublisher()
+
+        _searchWithQuery
+            .flatMap { query -> AnyPublisher<[Repository], Never> in
+                guard var components = URLComponents(string: "https://api.github.com/search/repositories") else {
+                    return Publishers.Empty<[Repository], Never>().eraseToAnyPublisher()
+                }
+                components.queryItems = [URLQueryItem(name: "q", value: query)]
+
+                guard let url = components.url else {
+                    return Publishers.Empty<[Repository], Never>().eraseToAnyPublisher()
+                }
+
+                var request = URLRequest(url: url)
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                return URLSession.shared.combine.send(request: request)
+                    .decode(type: ItemResponse<Repository>.self, decoder: decoder)
+                    .map { $0.items }
+                    .replaceError(with: [])
+                    .handleEvents(receiveOutput: { print($0) },
+                                  receiveCompletion: { print($0)})
+                    .eraseToAnyPublisher()
+            }
+            .receive(subscriber: repositoriesAssign)
     }
 
     // TODO: Separate API access from here
     func search(query: String) {
-        guard var components = URLComponents(string: "https://api.github.com/search/repositories") else {
-            return
-        }
-        components.queryItems = [URLQueryItem(name: "q", value: query)]
-
-        guard let url = components.url else {
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            guard let data = data else {
-                return
-            }
-
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                self?.repositories = try decoder.decode(Items<Repository>.self, from: data).items
-            } catch {
-                print(error)
-            }
-        }.resume()
-    }
-}
-
-extension RepositoryData {
-
-    private struct Items<T: Decodable>: Decodable {
-        let items: [T]
+        _searchWithQuery.send(query)
     }
 }
