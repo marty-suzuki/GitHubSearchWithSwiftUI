@@ -10,7 +10,7 @@ import SwiftUI
 
 struct RepositoryListView : View {
 
-    @EnvironmentObject private var repositoryData: RepositoryData
+    @EnvironmentObject private var viewModel: RepositoryListViewModel
     @State private var text: String = ""
 
     var body: some View {
@@ -19,7 +19,7 @@ struct RepositoryListView : View {
 
             TextField($text,
                       placeholder: Text("Search reposipories..."),
-                      onCommit: { self.repositoryData.search(query: self.text) })
+                      onCommit: { self.viewModel.search(query: self.text) })
                 .frame(height: 40)
                 .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
                 .border(Color.gray, cornerRadius: 8)
@@ -27,7 +27,7 @@ struct RepositoryListView : View {
 
             List {
 
-                ForEach(repositoryData.repositories.identified(by: \.id)) { repository in
+                ForEach(viewModel.repositories.identified(by: \.id)) { repository in
                      RepositoryView(repository: repository)
                 }
             }

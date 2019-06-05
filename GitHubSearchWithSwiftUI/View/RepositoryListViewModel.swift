@@ -1,8 +1,8 @@
 //
-//  RepositoryData.swift
+//  RepositoryListViewModel.swift
 //  GitHubSearchWithSwiftUI
 //
-//  Created by marty-suzuki on 2019/06/05.
+//  Created by marty-suzuki on 2019/06/06.
 //  Copyright © 2019 jp.marty-suzuki. All rights reserved.
 //
 
@@ -10,12 +10,10 @@ import Combine
 import Foundation
 import SwiftUI
 
-extension JSONDecoder: TopLevelDecoder {}
+final class RepositoryListViewModel: BindableObject {
 
-final class RepositoryData: BindableObject {
-
-    let didChange: AnyPublisher<RepositoryData, Never>
-    private let _didChange = PassthroughSubject<RepositoryData, Never>()
+    let didChange: AnyPublisher<RepositoryListViewModel, Never>
+    private let _didChange = PassthroughSubject<RepositoryListViewModel, Never>()
 
     private let _searchWithQuery = PassthroughSubject<String, Never>()
     private lazy var repositoriesAssign = Subscribers.Assign(object: self, keyPath: \.repositories)
@@ -44,7 +42,7 @@ final class RepositoryData: BindableObject {
             }
             .receive(subscriber: repositoriesAssign)
     }
-    
+
     func search(query: String) {
         _searchWithQuery.send(query)
     }
