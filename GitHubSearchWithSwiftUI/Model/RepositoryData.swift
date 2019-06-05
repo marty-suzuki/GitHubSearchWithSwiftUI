@@ -38,31 +38,13 @@ final class RepositoryData: BindableObject {
 
         _searchWithQuery
             .flatMap { query -> AnyPublisher<[Repository], Never> in
-                guard var components = URLComponents(string: "https://api.github.com/search/repositories") else {
-                    return Publishers.Empty<[Repository], Never>().eraseToAnyPublisher()
-                }
-                components.queryItems = [URLQueryItem(name: "q", value: query)]
-
-                guard let url = components.url else {
-                    return Publishers.Empty<[Repository], Never>().eraseToAnyPublisher()
-                }
-
-                var request = URLRequest(url: url)
-                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                return URLSession.shared.combine.send(request: request)
-                    .decode(type: ItemResponse<Repository>.self, decoder: decoder)
-                    .map { $0.items }
+                RepositoryAPI.search(query: query)
                     .replaceError(with: [])
-                    .handleEvents(receiveOutput: { print($0) },
-                                  receiveCompletion: { print($0)})
                     .eraseToAnyPublisher()
             }
             .receive(subscriber: repositoriesAssign)
     }
-
-    // TODO: Separate API access from here
+    
     func search(query: String) {
         _searchWithQuery.send(query)
     }
