@@ -13,37 +13,50 @@ import SwiftUI
 final class RepositoryListViewModel: BindableObject {
 
     let didChange: AnyPublisher<RepositoryListViewModel, Never>
-    private let _didChange = PassthroughSubject<RepositoryListViewModel, Never>()
 
     private let _searchWithQuery = PassthroughSubject<String, Never>()
-    private lazy var repositoriesAssign = Subscribers.Assign(object: self, keyPath: \.repositories)
+    private var cancellable: AnyCancellable?
 
-    private(set) var repositories: [Repository] = [] {
-        didSet {
-            // TODO: Do not want to use DispatchQueue.main here
-            DispatchQueue.main.async {
-                self._didChange.send(self)
-            }
-        }
-    }
-
-    deinit {
-        repositoriesAssign.cancel()
-    }
+    private(set) var repositories: [Repository] = []
+    private(set) var errorMessage: String?
+    var text: String = ""
 
     init() {
+        let _didChange = PassthroughSubject<RepositoryListViewModel, Never>()
         self.didChange = _didChange.eraseToAnyPublisher()
 
-        _searchWithQuery
-            .flatMap { query -> AnyPublisher<[Repository], Never> in
+        let sink = _searchWithQuery
+            .flatMapLatest { query -> AnyPublisher<([Repository], String?), Never> in
                 RepositoryAPI.search(query: query)
-                    .replaceError(with: [])
+                    .map { result -> ([Repository], String?) in
+                        switch result {
+                        case let .success(repositories):
+                            return (repositories, nil)
+                        case let .failure(response):
+                            return ([], response.message)
+                        }
+                    }
                     .eraseToAnyPublisher()
             }
-            .receive(subscriber: repositoriesAssign)
+            .sink { [weak self] repositories, message in
+                // TODO: Do not want to use DispatchQueue.main here
+                DispatchQueue.main.async {
+                    guard let me = self else {
+                        return
+                    }
+                    me.repositories = repositories
+                    me.errorMessage = message
+                    _didChange.send(me)
+                }
+            }
+
+        self.cancellable = AnyCancellable(sink)
     }
 
-    func search(query: String) {
-        _searchWithQuery.send(query)
+    func search() {
+        if text.isEmpty {
+            return
+        }
+        _searchWithQuery.send(text)
     }
 }

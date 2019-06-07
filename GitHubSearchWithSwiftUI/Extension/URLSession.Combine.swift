@@ -25,9 +25,15 @@ extension CombineExtension where Base == URLSession {
                 }
 
                 guard 200..<300 ~= response.statusCode else {
-                    let e = URLSessionError.serverError(statusCode: response.statusCode,
-                                                        error: error)
-                    subscriber.receive(completion: .failure(e))
+                    let sessionError: URLSessionError
+                    if let data = data {
+                        sessionError = .serverErrorMessage(statusCode: response.statusCode,
+                                                           data: data)
+                    } else {
+                        sessionError = .serverError(statusCode: response.statusCode,
+                                                    error: error)
+                    }
+                    subscriber.receive(completion: .failure(sessionError))
                     return
                 }
 
@@ -44,7 +50,7 @@ extension CombineExtension where Base == URLSession {
                 }
             }
 
-            // TODO: cancel task when subscriber cancelled
+            subscriber.receive(subscription: AnySubscription { task.cancel() })
             task.resume()
         }
     }
@@ -53,6 +59,7 @@ extension CombineExtension where Base == URLSession {
 enum URLSessionError: Error {
     case invalidResponse
     case noData
+    case serverErrorMessage(statusCode: Int, data: Data)
     case serverError(statusCode: Int, error: Error?)
     case unknown(Error)
 }

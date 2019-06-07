@@ -11,15 +11,15 @@ import Foundation
 
 enum RepositoryAPI {
 
-    static func search(query: String) -> AnyPublisher<[Repository], Error> {
+    static func search(query: String) -> AnyPublisher<Result<[Repository], ErrorResponse>, Never> {
 
         guard var components = URLComponents(string: "https://api.github.com/search/repositories") else {
-            return Publishers.Empty<[Repository], Error>().eraseToAnyPublisher()
+            return .empty()
         }
         components.queryItems = [URLQueryItem(name: "q", value: query)]
 
         guard let url = components.url else {
-            return Publishers.Empty<[Repository], Error>().eraseToAnyPublisher()
+            return .empty()
         }
 
         var request = URLRequest(url: url)
@@ -28,9 +28,18 @@ enum RepositoryAPI {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return URLSession.shared.combine.send(request: request)
             .decode(type: ItemResponse<Repository>.self, decoder: decoder)
-            .map { $0.items }
-            .handleEvents(receiveOutput: { print($0) },
-                          receiveCompletion: { print($0)})
+            .map { Result<[Repository], ErrorResponse>.success($0.items) }
+            .catch { error -> AnyPublisher<Result<[Repository], ErrorResponse>, Never> in
+                guard case let .serverErrorMessage(_, data)? = error as? URLSessionError else {
+                    return .just(.success([]))
+                }
+                do {
+                    let response = try JSONDecoder().decode(ErrorResponse.self, from: data)
+                    return .just(.failure(response))
+                } catch _ {
+                    return .just(.success([]))
+                }
+            }
             .eraseToAnyPublisher()
     }
 }
