@@ -1,15 +1,18 @@
 # GitHubSearchWithSwiftUI
 
-GitHubSearchWithSwiftUI is an example that using [SwiftUI <img width="18px" src="https://developer.apple.com/assets/elements/icons/swiftui/swiftui-96x96.png"/>](https://developer.apple.com/xcode/swiftui/)
+GitHubSearchWithSwiftUI is an example that using [Combine](https://developer.apple.com/documentation/combine) and [SwiftUI <img width="18px" src="https://developer.apple.com/assets/elements/icons/swiftui/swiftui-96x96.png"/>](https://developer.apple.com/xcode/swiftui/)
 
-<img width="400px" src="https://user-images.githubusercontent.com/2082134/58905672-41539280-8745-11e9-99e3-cb3c3c4991f0.png" />
+
+| Receive Results | Receive Error |
+| :-: | :-: |
+| ![](https://user-images.githubusercontent.com/2082134/58905672-41539280-8745-11e9-99e3-cb3c3c4991f0.png) | ![](https://user-images.githubusercontent.com/2082134/59124140-e1a1f500-8999-11e9-9d28-aaa2181a5e43.png) |
 
 ## TODO
 
 - [x] Search with TextField's text
 - [x] Reflect API responses to List
-- [X] Separate API access from BindableObject
-- [X] Use Combine with API access
+- [x] Separate API access from BindableObject
+- [x] Use Combine with API access
 - [ ] Reflect responses in MainThread via Combine
 
 ## Requirements
@@ -24,6 +27,11 @@ GitHubSearchWithSwiftUI is an example that using [SwiftUI <img width="18px" src=
 - https://developer.apple.com/documentation/swiftui
 - https://developer.apple.com/documentation/combine
 - https://developer.apple.com/design/human-interface-guidelines/sf-symbols/overview/
+- [Data Flow Through SwiftUI](https://developer.apple.com/videos/play/wwdc2019/226)
+- [Building Custom Views with SwiftUI](https://developer.apple.com/videos/play/wwdc2019/237)
+- [Combine in Practice](https://developer.apple.com/videos/play/wwdc2019/721)
+- [Introducing Combine](https://developer.apple.com/videos/play/wwdc2019/722)
+- [Introducing Combine and Advances in Foundation](https://developer.apple.com/videos/play/wwdc2019/711)
 
 ## License
 
