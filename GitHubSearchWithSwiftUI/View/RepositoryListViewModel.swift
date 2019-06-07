@@ -26,6 +26,7 @@ final class RepositoryListViewModel: BindableObject {
         self.didChange = _didChange.eraseToAnyPublisher()
 
         let sink = _searchWithQuery
+            .filter { !$0.isEmpty }
             .flatMapLatest { query -> AnyPublisher<([Repository], String?), Never> in
                 RepositoryAPI.search(query: query)
                     .map { result -> ([Repository], String?) in
@@ -54,9 +55,6 @@ final class RepositoryListViewModel: BindableObject {
     }
 
     func search() {
-        if text.isEmpty {
-            return
-        }
         _searchWithQuery.send(text)
     }
 }
