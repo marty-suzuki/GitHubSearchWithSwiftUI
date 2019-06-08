@@ -11,24 +11,36 @@ import Foundation
 import SwiftUI
 
 final class RepositoryListViewModel: BindableObject {
+    typealias SearchRepositories = (String) -> AnyPublisher<Result<[Repository], ErrorResponse>, Never>
 
     let didChange: AnyPublisher<RepositoryListViewModel, Never>
+    private let _didChange = PassthroughSubject<RepositoryListViewModel, Never>()
 
     private let _searchWithQuery = PassthroughSubject<String, Never>()
-    private var cancellable: AnyCancellable?
+    private var cancellables: [AnyCancellable] = []
 
-    private(set) var repositories: [Repository] = []
-    private(set) var errorMessage: String?
+    private(set) var repositories: [Repository] = [] {
+        didSet {
+            _didChange.send(self)
+        }
+    }
+    private(set) var errorMessage: String? {
+        didSet {
+            _didChange.send(self)
+        }
+    }
     var text: String = ""
 
-    init() {
-        let _didChange = PassthroughSubject<RepositoryListViewModel, Never>()
+    init<S: Scheduler>(searchRepositories: @escaping SearchRepositories = RepositoryAPI.search,
+                       mainScheduler: S) {
+
         self.didChange = _didChange.eraseToAnyPublisher()
 
-        let sink = _searchWithQuery
+        let response = _searchWithQuery
             .filter { !$0.isEmpty }
+            .debounce(for: .milliseconds(300), scheduler: mainScheduler)
             .flatMapLatest { query -> AnyPublisher<([Repository], String?), Never> in
-                RepositoryAPI.search(query: query)
+                searchRepositories(query)
                     .map { result -> ([Repository], String?) in
                         switch result {
                         case let .success(repositories):
@@ -39,19 +51,17 @@ final class RepositoryListViewModel: BindableObject {
                     }
                     .eraseToAnyPublisher()
             }
-            .sink { [weak self] repositories, message in
-                // TODO: Do not want to use DispatchQueue.main here
-                DispatchQueue.main.async {
-                    guard let me = self else {
-                        return
-                    }
-                    me.repositories = repositories
-                    me.errorMessage = message
-                    _didChange.send(me)
-                }
-            }
+            .receive(on: mainScheduler)
+            .share()
 
-        self.cancellable = AnyCancellable(sink)
+        cancellables += [
+            response
+                .map { $0.0 }
+                .assign(to: \.repositories, on: self),
+            response
+                .map { $0.1 }
+                .assign(to: \.errorMessage, on: self)
+        ]
     }
 
     func search() {

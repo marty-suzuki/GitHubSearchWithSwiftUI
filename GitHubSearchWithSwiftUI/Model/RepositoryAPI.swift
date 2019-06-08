@@ -10,8 +10,14 @@ import Combine
 import Foundation
 
 enum RepositoryAPI {
+    typealias SearchResponse = AnyPublisher<Result<[Repository], ErrorResponse>, Never>
+    typealias SendRequest = (URLRequest) -> AnyPublisher<Data, URLSessionError>
 
-    static func search(query: String) -> AnyPublisher<Result<[Repository], ErrorResponse>, Never> {
+    static func search(query: String) -> SearchResponse {
+        search(query: query, sendRequest: URLSession.shared.combine.send)
+    }
+
+    static func search(query: String, sendRequest: SendRequest) -> SearchResponse {
 
         guard var components = URLComponents(string: "https://api.github.com/search/repositories") else {
             return .empty()
@@ -26,10 +32,10 @@ enum RepositoryAPI {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return URLSession.shared.combine.send(request: request)
+        return sendRequest(request)
             .decode(type: ItemResponse<Repository>.self, decoder: decoder)
             .map { Result<[Repository], ErrorResponse>.success($0.items) }
-            .catch { error -> AnyPublisher<Result<[Repository], ErrorResponse>, Never> in
+            .catch { error -> SearchResponse in
                 guard case let .serverErrorMessage(_, data)? = error as? URLSessionError else {
                     return .just(.success([]))
                 }

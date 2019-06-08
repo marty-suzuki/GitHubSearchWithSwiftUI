@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		ED73146222A6F228004F8DA0 /* RepositoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED73146122A6F228004F8DA0 /* RepositoryListView.swift */; };
+		EDAE143222AC19D10091B206 /* DispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE143122AC19D10091B206 /* DispatchQueueScheduler.swift */; };
 		EDDADAB122A808D500FEDC01 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDADAB022A808D500FEDC01 /* Combine.swift */; };
 		EDDADAB322A809E600FEDC01 /* URLSession.Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDADAB222A809E600FEDC01 /* URLSession.Combine.swift */; };
 		EDDADAB522A821CD00FEDC01 /* ItemResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDADAB422A821CD00FEDC01 /* ItemResponse.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		ED73146122A6F228004F8DA0 /* RepositoryListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryListView.swift; sourceTree = "<group>"; };
+		EDAE143122AC19D10091B206 /* DispatchQueueScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueueScheduler.swift; sourceTree = "<group>"; };
 		EDDADAB022A808D500FEDC01 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
 		EDDADAB222A809E600FEDC01 /* URLSession.Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.Combine.swift; sourceTree = "<group>"; };
 		EDDADAB422A821CD00FEDC01 /* ItemResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemResponse.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				EDDADAB622A829A300FEDC01 /* RepositoryAPI.swift */,
 				EDFAF5C822AAC8FD0028EB2A /* AnySubscription.swift */,
 				EDFAF5CA22AACAB60028EB2A /* ErrorResponse.swift */,
+				EDAE143122AC19D10091B206 /* DispatchQueueScheduler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				EDFAF5C722AAC7460028EB2A /* Publisher.Extension.swift in Sources */,
 				EDDADAB122A808D500FEDC01 /* Combine.swift in Sources */,
 				EDFAF5CB22AACAB60028EB2A /* ErrorResponse.swift in Sources */,
+				EDAE143222AC19D10091B206 /* DispatchQueueScheduler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
