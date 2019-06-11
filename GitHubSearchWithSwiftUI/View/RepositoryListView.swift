@@ -10,13 +10,14 @@ import SwiftUI
 
 struct RepositoryListView : View {
 
-    @EnvironmentObject private var viewModel: RepositoryListViewModel
+    @ObjectBinding
+    private(set) var viewModel: RepositoryListViewModel
 
     var body: some View {
 
         NavigationView {
 
-            TextField(viewModel[\.text],
+            TextField($viewModel.text,
                       placeholder: Text("Search reposipories..."),
                       onCommit: { self.viewModel.search() })
                 .frame(height: 40)
@@ -33,7 +34,7 @@ struct RepositoryListView : View {
                 ForEach(viewModel.repositories.identified(by: \.id)) { repository in
 
                     NavigationButton(destination: WebView(url: repository.htmlUrl)) {
-                        
+
                         RepositoryView(repository: repository)
                     }
                 }
