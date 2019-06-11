@@ -18,13 +18,14 @@ extension Publisher {
 
 extension Publisher {
 
-    static func empty<Output, Failure>() -> AnyPublisher<Output, Failure> {
+    static func empty() -> AnyPublisher<Output, Failure> {
         return Publishers.Empty()
             .eraseToAnyPublisher()
     }
 
-    static func just<Output>(_ output: Output) -> AnyPublisher<Output, Never> {
+    static func just(_ output: Output) -> AnyPublisher<Output, Failure> {
         return Publishers.Just(output)
+            .catch { _ in AnyPublisher<Output, Failure>.empty() }
             .eraseToAnyPublisher()
     }
 }
