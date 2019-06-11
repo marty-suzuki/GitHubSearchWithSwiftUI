@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		ED73146222A6F228004F8DA0 /* RepositoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED73146122A6F228004F8DA0 /* RepositoryListView.swift */; };
+		ED7F668122AFDEB7001F6DFA /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F668022AFDEB7001F6DFA /* WebView.swift */; };
 		EDAE143222AC19D10091B206 /* DispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE143122AC19D10091B206 /* DispatchQueueScheduler.swift */; };
 		EDDADAB122A808D500FEDC01 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDADAB022A808D500FEDC01 /* Combine.swift */; };
 		EDDADAB322A809E600FEDC01 /* URLSession.Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDADAB222A809E600FEDC01 /* URLSession.Combine.swift */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		ED73146122A6F228004F8DA0 /* RepositoryListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryListView.swift; sourceTree = "<group>"; };
+		ED7F668022AFDEB7001F6DFA /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EDAE143122AC19D10091B206 /* DispatchQueueScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueueScheduler.swift; sourceTree = "<group>"; };
 		EDDADAB022A808D500FEDC01 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
 		EDDADAB222A809E600FEDC01 /* URLSession.Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.Combine.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				ED73146122A6F228004F8DA0 /* RepositoryListView.swift */,
 				EDDF06B622A6CD8300B23D44 /* RepositoryView.swift */,
 				EDDADAB822A82C0400FEDC01 /* RepositoryListViewModel.swift */,
+				ED7F668022AFDEB7001F6DFA /* WebView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED73146222A6F228004F8DA0 /* RepositoryListView.swift in Sources */,
+				ED7F668122AFDEB7001F6DFA /* WebView.swift in Sources */,
 				EDDADAB722A829A300FEDC01 /* RepositoryAPI.swift in Sources */,
 				EDDF06A222A6C61C00B23D44 /* AppDelegate.swift in Sources */,
 				EDDADAB522A821CD00FEDC01 /* ItemResponse.swift in Sources */,

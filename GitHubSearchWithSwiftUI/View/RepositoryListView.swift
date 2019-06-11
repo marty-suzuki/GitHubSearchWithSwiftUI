@@ -31,7 +31,11 @@ struct RepositoryListView : View {
                     .multilineTextAlignment(.center)
 
                 ForEach(viewModel.repositories.identified(by: \.id)) { repository in
-                     RepositoryView(repository: repository)
+
+                    NavigationButton(destination: WebView(url: repository.htmlUrl)) {
+                        
+                        RepositoryView(repository: repository)
+                    }
                 }
             }
             .navigationBarTitle(Text("Search🔍"))
