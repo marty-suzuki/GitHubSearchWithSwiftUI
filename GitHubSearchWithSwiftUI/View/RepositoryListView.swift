@@ -33,7 +33,10 @@ struct RepositoryListView : View {
 
                 ForEach(viewModel.repositories.identified(by: \.id)) { repository in
 
-                    NavigationButton(destination: WebView(url: repository.htmlUrl)) {
+                    NavigationButton(destination:
+                        WebView(url: repository.htmlUrl)
+                            .navigationBarTitle(Text(repository.fullName))
+                    ) {
 
                         RepositoryView(repository: repository)
                     }
