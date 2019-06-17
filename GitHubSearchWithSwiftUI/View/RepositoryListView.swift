@@ -17,13 +17,23 @@ struct RepositoryListView : View {
 
         NavigationView {
 
-            TextField($viewModel.text,
-                      placeholder: Text("Search reposipories..."),
-                      onCommit: { self.viewModel.search() })
+            HStack {
+
+                TextField($viewModel.text,
+                          placeholder: Text("Search reposipories..."))
+                    .frame(height: 40)
+                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+                    .border(Color.gray, cornerRadius: 8)
+                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+
+                Button(action: { self.viewModel.search() }) {
+                    Text("Search")
+                }
                 .frame(height: 40)
                 .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-                .border(Color.gray, cornerRadius: 8)
-                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .border(Color.blue, cornerRadius: 8)
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
+            }
 
             List {
 

@@ -17,7 +17,7 @@ GitHubSearchWithSwiftUI is an example that using [Combine](https://developer.app
 
 ## Requirements
 
-- Xcode 11 Beta
+- Xcode 11 Beta 2
 - Swift 5.1
 - iOS 13 Beta
 
