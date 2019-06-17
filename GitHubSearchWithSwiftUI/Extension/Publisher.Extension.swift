@@ -28,4 +28,9 @@ extension Publisher {
             .catch { _ in AnyPublisher<Output, Failure>.empty() }
             .eraseToAnyPublisher()
     }
+
+    static func fail(_ error: Failure) -> AnyPublisher<Output, Failure> {
+        return Publishers.Fail(error: error)
+            .eraseToAnyPublisher()
+    }
 }
