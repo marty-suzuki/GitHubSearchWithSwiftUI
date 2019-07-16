@@ -17,42 +17,42 @@ struct RepositoryListView : View {
 
         NavigationView {
 
-            HStack {
+            VStack {
 
-                TextField($viewModel.text,
-                          placeholder: Text("Search reposipories..."))
+                HStack {
+                    TextField("Search reposipories...", text: $viewModel.text)
+                        .frame(height: 40)
+                        .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+                        .border(Color.gray, cornerRadius: 8)
+                        .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+
+                    Button(action: { self.viewModel.search() }) {
+                        Text("Search")
+                    }
                     .frame(height: 40)
-                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-                    .border(Color.gray, cornerRadius: 8)
-                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-
-                Button(action: { self.viewModel.search() }) {
-                    Text("Search")
+                        .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+                        .border(Color.blue, cornerRadius: 8)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
                 }
-                .frame(height: 40)
-                .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-                .border(Color.blue, cornerRadius: 8)
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
-            }
 
-            List {
+                List {
+                    viewModel.errorMessage.map(Text.init)?
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.center)
 
-                viewModel.errorMessage.map(Text.init)?
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.center)
+                    ForEach(viewModel.repositories.identified(by: \.id)) { repository in
 
-                ForEach(viewModel.repositories.identified(by: \.id)) { repository in
+                        NavigationLink(destination:
+                            WebView(url: repository.htmlUrl)
+                                .navigationBarTitle(Text(repository.fullName))
+                        ) {
 
-                    NavigationButton(destination:
-                        WebView(url: repository.htmlUrl)
-                            .navigationBarTitle(Text(repository.fullName))
-                    ) {
-
-                        RepositoryView(repository: repository)
+                            RepositoryView(repository: repository)
+                        }
                     }
                 }
+                .navigationBarTitle(Text("Search🔍"))
             }
-            .navigationBarTitle(Text("Search🔍"))
         }
     }
 }
