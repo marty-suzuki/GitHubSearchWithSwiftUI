@@ -10,35 +10,30 @@ import Combine
 import Foundation
 import SwiftUI
 
-final class RepositoryListViewModel: BindableObject {
+final class RepositoryListViewModel: ObservableObject {
     typealias SearchRepositories = (String) -> AnyPublisher<Result<[Repository], ErrorResponse>, Never>
-
-    let didChange: AnyPublisher<RepositoryListViewModel, Never>
-    private let _didChange = PassthroughSubject<RepositoryListViewModel, Never>()
 
     private let _searchWithQuery = PassthroughSubject<String, Never>()
     private var cancellables: [AnyCancellable] = []
 
-    private(set) var repositories: [Repository] = [] {
-        didSet {
-            _didChange.send(self)
-        }
-    }
-    private(set) var errorMessage: String? {
-        didSet {
-            _didChange.send(self)
-        }
-    }
+    @Published private(set) var repositories: [Repository] = []
+    @Published private(set) var errorMessage: String? = nil
+    @Published private(set) var isLoading = false
     var text: String = ""
 
     init<S: Scheduler>(searchRepositories: @escaping SearchRepositories = RepositoryAPI.search,
                        mainScheduler: S) {
 
-        self.didChange = _didChange.eraseToAnyPublisher()
-
-        let response = _searchWithQuery
+        let searchTrigger = _searchWithQuery
             .filter { !$0.isEmpty }
             .debounce(for: .milliseconds(300), scheduler: mainScheduler)
+
+        searchTrigger
+            .map { _ in true }
+            .assign(to: \.isLoading, on: self)
+            .store(in: &cancellables)
+
+        let response = searchTrigger
             .flatMapLatest { query -> AnyPublisher<([Repository], String?), Never> in
                 searchRepositories(query)
                     .map { result -> ([Repository], String?) in
@@ -54,14 +49,20 @@ final class RepositoryListViewModel: BindableObject {
             .receive(on: mainScheduler)
             .share()
 
-        cancellables += [
-            response
-                .map { $0.0 }
-                .assign(to: \.repositories, on: self),
-            response
-                .map { $0.1 }
-                .assign(to: \.errorMessage, on: self)
-        ]
+        response
+            .map { _ in false }
+            .assign(to: \.isLoading, on: self)
+            .store(in: &cancellables)
+
+        response
+            .map { $0.0 }
+            .assign(to: \.repositories, on: self)
+            .store(in: &cancellables)
+
+        response
+            .map { $0.1 }
+            .assign(to: \.errorMessage, on: self)
+            .store(in: &cancellables)
     }
 
     func search() {

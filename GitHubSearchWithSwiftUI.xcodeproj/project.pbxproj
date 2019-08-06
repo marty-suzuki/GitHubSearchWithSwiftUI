@@ -22,7 +22,6 @@
 		EDDF06B722A6CD8300B23D44 /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDF06B622A6CD8300B23D44 /* RepositoryView.swift */; };
 		EDDF06BA22A6D78200B23D44 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDF06B922A6D78200B23D44 /* Repository.swift */; };
 		EDFAF5C722AAC7460028EB2A /* Publisher.Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFAF5C622AAC7460028EB2A /* Publisher.Extension.swift */; };
-		EDFAF5C922AAC8FD0028EB2A /* AnySubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFAF5C822AAC8FD0028EB2A /* AnySubscription.swift */; };
 		EDFAF5CB22AACAB60028EB2A /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFAF5CA22AACAB60028EB2A /* ErrorResponse.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +43,6 @@
 		EDDF06B622A6CD8300B23D44 /* RepositoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
 		EDDF06B922A6D78200B23D44 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		EDFAF5C622AAC7460028EB2A /* Publisher.Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.Extension.swift; sourceTree = "<group>"; };
-		EDFAF5C822AAC8FD0028EB2A /* AnySubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnySubscription.swift; sourceTree = "<group>"; };
 		EDFAF5CA22AACAB60028EB2A /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,7 +124,6 @@
 				EDDF06B922A6D78200B23D44 /* Repository.swift */,
 				EDDADAB422A821CD00FEDC01 /* ItemResponse.swift */,
 				EDDADAB622A829A300FEDC01 /* RepositoryAPI.swift */,
-				EDFAF5C822AAC8FD0028EB2A /* AnySubscription.swift */,
 				EDFAF5CA22AACAB60028EB2A /* ErrorResponse.swift */,
 			);
 			path = Model;
@@ -213,7 +210,6 @@
 				EDDF06BA22A6D78200B23D44 /* Repository.swift in Sources */,
 				EDDF06B722A6CD8300B23D44 /* RepositoryView.swift in Sources */,
 				EDDADAB322A809E600FEDC01 /* URLSession.Combine.swift in Sources */,
-				EDFAF5C922AAC8FD0028EB2A /* AnySubscription.swift in Sources */,
 				EDFAF5C722AAC7460028EB2A /* Publisher.Extension.swift in Sources */,
 				EDDADAB122A808D500FEDC01 /* Combine.swift in Sources */,
 				EDFAF5CB22AACAB60028EB2A /* ErrorResponse.swift in Sources */,

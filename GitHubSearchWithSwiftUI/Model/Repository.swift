@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Repository: Decodable {
+struct Repository: Decodable, Identifiable {
     let id: Int
     let fullName: String
     let description: String?
