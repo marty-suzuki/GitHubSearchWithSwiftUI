@@ -19,13 +19,13 @@ struct RepositoryListView : View {
             VStack {
 
                 HStack {
-                    TextField("Search reposipories...", text: $viewModel.text)
+                    TextField("Search reposipories...", text: viewModel.input.text)
                         .frame(height: 40)
                         .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
                         .border(Color.gray, cornerRadius: 8)
                         .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
 
-                    Button<Text>(LocalizedStringKey("Search")) { self.viewModel.search() }
+                    Button<Text>(LocalizedStringKey("Search")) { self.viewModel.input.search.send() }
                         .frame(height: 40)
                         .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
                         .border(Color.blue, cornerRadius: 8)
@@ -33,14 +33,14 @@ struct RepositoryListView : View {
                 }
 
                 List {
-                    if viewModel.isLoading {
+                    if viewModel.output.isLoading {
                         Text("Loading...")
                     } else {
-                        viewModel.errorMessage.map(Text.init)?
+                        viewModel.output.errorMessage.map(Text.init)?
                             .lineLimit(nil)
                             .multilineTextAlignment(.center)
 
-                        ForEach(viewModel.repositories) { repository in
+                        ForEach(viewModel.output.repositories) { repository in
 
                             NavigationLink(destination:
                                 WebView(url: repository.htmlUrl)

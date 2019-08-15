@@ -8,64 +8,88 @@
 
 import Combine
 import Foundation
+import Ricemill
 import SwiftUI
 
-final class RepositoryListViewModel: ObservableObject {
-    typealias SearchRepositories = (String) -> AnyPublisher<Result<[Repository], ErrorResponse>, Never>
+final class RepositoryListViewModel: Machine<RepositoryListViewModel.Resolver> {
+    typealias Output = Store
 
-    private let _searchWithQuery = PassthroughSubject<String, Never>()
-    private var cancellables: [AnyCancellable] = []
-
-    @Published private(set) var repositories: [Repository] = []
-    @Published private(set) var errorMessage: String? = nil
-    @Published private(set) var isLoading = false
-    var text: String = ""
-
-    init<S: Scheduler>(searchRepositories: @escaping SearchRepositories = RepositoryAPI.search,
-                       mainScheduler: S) {
-
-        let searchTrigger = _searchWithQuery
-            .filter { !$0.isEmpty }
-            .debounce(for: .milliseconds(300), scheduler: mainScheduler)
-
-        searchTrigger
-            .map { _ in true }
-            .assign(to: \.isLoading, on: self)
-            .store(in: &cancellables)
-
-        let response = searchTrigger
-            .flatMapLatest { query -> AnyPublisher<([Repository], String?), Never> in
-                searchRepositories(query)
-                    .map { result -> ([Repository], String?) in
-                        switch result {
-                        case let .success(repositories):
-                            return (repositories, nil)
-                        case let .failure(response):
-                            return ([], response.message)
-                        }
-                    }
-                    .eraseToAnyPublisher()
-            }
-            .receive(on: mainScheduler)
-            .share()
-
-        response
-            .map { _ in false }
-            .assign(to: \.isLoading, on: self)
-            .store(in: &cancellables)
-
-        response
-            .map { $0.0 }
-            .assign(to: \.repositories, on: self)
-            .store(in: &cancellables)
-
-        response
-            .map { $0.1 }
-            .assign(to: \.errorMessage, on: self)
-            .store(in: &cancellables)
+    final class Input: BindableInputType {
+        let search = PassthroughSubject<Void, Never>()
+        @Published var text: String = ""
     }
 
-    func search() {
-        _searchWithQuery.send(text)
+    final class Store: StoredOutputType {
+        @Published var repositories: [Repository] = []
+        @Published var errorMessage: String? = nil
+        @Published var isLoading = false
+        @Published fileprivate var query: String = ""
+    }
+
+    struct Extra: ExtraType {
+        typealias SearchRepositories = (String) -> AnyPublisher<Result<[Repository], ErrorResponse>, Never>
+        let searchRepositories: SearchRepositories
+        let mainScheduler: AnyScheduler<DispatchQueue.SchedulerTimeType, DispatchQueue.SchedulerOptions>
+    }
+
+    enum Resolver: ResolverType {
+
+        static func polish(input: Publishing<Input>,
+                           store: Store,
+                           extra: Extra) -> Polished<Output> {
+
+            var cancellables: [AnyCancellable] = []
+
+            let searchTrigger = input.search
+                .flatMap { _ in Just(store.query) }
+                .filter { !$0.isEmpty }
+                .debounce(for: .milliseconds(300), scheduler: extra.mainScheduler)
+
+            searchTrigger
+                .map { _ in true }
+                .assign(to: \.isLoading, on: store)
+                .store(in: &cancellables)
+
+            let response = searchTrigger
+                .flatMapLatest { query -> AnyPublisher<([Repository], String?), Never> in
+                    extra.searchRepositories(query)
+                        .map { result -> ([Repository], String?) in
+                            switch result {
+                            case let .success(repositories):
+                                return (repositories, nil)
+                            case let .failure(response):
+                                return ([], response.message)
+                            }
+                        }
+                        .eraseToAnyPublisher()
+                }
+                .receive(on: extra.mainScheduler)
+                .share()
+
+            response
+                .map { _ in false }
+                .assign(to: \.isLoading, on: store)
+                .store(in: &cancellables)
+
+            response
+                .map { $0.0 }
+                .assign(to: \.repositories, on: store)
+                .store(in: &cancellables)
+
+            response
+                .map { $0.1 }
+                .assign(to: \.errorMessage, on: store)
+                .store(in: &cancellables)
+
+            input.$text
+                .assign(to: \.query, on: store)
+                .store(in: &cancellables)
+
+            return Polished(cancellables: cancellables)
+        }
+    }
+
+    static func make(extra: Extra) -> RepositoryListViewModel {
+        RepositoryListViewModel(input: Input(), store: Store(), extra: extra)
     }
 }

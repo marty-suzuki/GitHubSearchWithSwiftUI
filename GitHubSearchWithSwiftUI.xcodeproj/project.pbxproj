@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D8154D523059CD200449F75 /* Ricemill in Frameworks */ = {isa = PBXBuildFile; productRef = 9D8154D423059CD200449F75 /* Ricemill */; };
+		9D8154D72305A28E00449F75 /* AnyScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8154D62305A28E00449F75 /* AnyScheduler.swift */; };
 		ED73146222A6F228004F8DA0 /* RepositoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED73146122A6F228004F8DA0 /* RepositoryListView.swift */; };
 		ED7F668122AFDEB7001F6DFA /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F668022AFDEB7001F6DFA /* WebView.swift */; };
 		EDDADAB122A808D500FEDC01 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDADAB022A808D500FEDC01 /* Combine.swift */; };
@@ -26,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9D8154D62305A28E00449F75 /* AnyScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyScheduler.swift; sourceTree = "<group>"; };
 		ED73146122A6F228004F8DA0 /* RepositoryListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryListView.swift; sourceTree = "<group>"; };
 		ED7F668022AFDEB7001F6DFA /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EDDADAB022A808D500FEDC01 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
@@ -51,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D8154D523059CD200449F75 /* Ricemill in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +129,7 @@
 				EDDADAB422A821CD00FEDC01 /* ItemResponse.swift */,
 				EDDADAB622A829A300FEDC01 /* RepositoryAPI.swift */,
 				EDFAF5CA22AACAB60028EB2A /* ErrorResponse.swift */,
+				9D8154D62305A28E00449F75 /* AnyScheduler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -145,6 +150,9 @@
 			dependencies = (
 			);
 			name = GitHubSearchWithSwiftUI;
+			packageProductDependencies = (
+				9D8154D423059CD200449F75 /* Ricemill */,
+			);
 			productName = GitHubSearchWithSwiftUI;
 			productReference = EDDF069E22A6C61C00B23D44 /* GitHubSearchWithSwiftUI.app */;
 			productType = "com.apple.product-type.application";
@@ -173,6 +181,9 @@
 				Base,
 			);
 			mainGroup = EDDF069522A6C61C00B23D44;
+			packageReferences = (
+				9D8154D323059CD200449F75 /* XCRemoteSwiftPackageReference "Ricemill" */,
+			);
 			productRefGroup = EDDF069F22A6C61C00B23D44 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -210,6 +221,7 @@
 				EDDF06BA22A6D78200B23D44 /* Repository.swift in Sources */,
 				EDDF06B722A6CD8300B23D44 /* RepositoryView.swift in Sources */,
 				EDDADAB322A809E600FEDC01 /* URLSession.Combine.swift in Sources */,
+				9D8154D72305A28E00449F75 /* AnyScheduler.swift in Sources */,
 				EDFAF5C722AAC7460028EB2A /* Publisher.Extension.swift in Sources */,
 				EDDADAB122A808D500FEDC01 /* Combine.swift in Sources */,
 				EDFAF5CB22AACAB60028EB2A /* ErrorResponse.swift in Sources */,
@@ -404,6 +416,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9D8154D323059CD200449F75 /* XCRemoteSwiftPackageReference "Ricemill" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marty-suzuki/Ricemill";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9D8154D423059CD200449F75 /* Ricemill */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D8154D323059CD200449F75 /* XCRemoteSwiftPackageReference "Ricemill" */;
+			productName = Ricemill;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EDDF069622A6C61C00B23D44 /* Project object */;
 }

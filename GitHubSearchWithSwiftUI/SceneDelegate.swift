@@ -23,7 +23,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let scene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: scene)
             window.rootViewController = UIHostingController(rootView:
-                RepositoryListView(viewModel: RepositoryListViewModel(mainScheduler: DispatchQueue.main))
+                RepositoryListView(
+                    viewModel: .make(
+                        extra: .init(
+                            searchRepositories: RepositoryAPI.search,
+                            mainScheduler: AnyScheduler(DispatchQueue.main)
+                        )
+                    )
+                )
             )
             self.window = window
             window.makeKeyAndVisible()
