@@ -7,6 +7,8 @@ GitHubSearchWithSwiftUI is an example that using [Combine](https://developer.app
 | :-: | :-: | :-: |
 | ![](https://user-images.githubusercontent.com/2082134/58905672-41539280-8745-11e9-99e3-cb3c3c4991f0.png) | ![](https://user-images.githubusercontent.com/2082134/59124140-e1a1f500-8999-11e9-9d28-aaa2181a5e43.png) | ![](https://user-images.githubusercontent.com/2082134/59275420-4198e400-8c97-11e9-8e44-588f328bde8d.png)
 
+[ricemill-sample](https://github.com/marty-suzuki/GitHubSearchWithSwiftUI/blob/ricemill-sample/GitHubSearchWithSwiftUI/View/RepositoryListViewModel.swift#L14-L90) branch is a sample which used [Ricemill](https://github.com/marty-suzuki/Ricemill) (that is Unidirectional Input / Output framework with Combine and SwiftUI).
+
 ## TODO
 
 - [x] Search with TextField's text
